@@ -19,7 +19,6 @@ const Movies = () => {
             if(!resp.ok){
                 throw new Error('Something went wrong ....Retrying');
             }
-            console.log('hhh    ')
             const data = await resp.json();
 
             const transformedMovies = data.results.map(movie => {
@@ -37,19 +36,21 @@ const Movies = () => {
             setFetchError(err.message);  
             setIsLoading(false);
         }
-
-        // let content = <p>No Movies Found</p>
     }
-    console.log(movies.length, isLoading, fetchError)
+    let content = <p>No Movies Found</p>;
+    if(isLoading)
+        content = <div className={classes.loader}></div>;
+    else if(fetchError)
+        content = <span>{fetchError}</span>;
+    else if(movies.length>0)
+        content = movies.map(movie => <MovieItem key={movie.id} data={movie}></MovieItem>);
+
     return (
         <Container>
         <section className="d-flex align-items-center  justify-content-center mt-5"><Button onClick={fetchMoviesHandler}>Fetch Movies</Button></section>
         <section>
             <ul>
-                {!isLoading && movies.length>0 && movies.map(movie => <MovieItem key={movie.id} data={movie}></MovieItem>)}
-                {!isLoading && movies.length===0 && !fetchError && <p>No Movies Found</p>}
-                {!isLoading && fetchError && <span>{fetchError}</span>}
-                {isLoading && <div className={classes.loader}></div>}
+                {content}
             </ul>
         </section>
     </Container>
