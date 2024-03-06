@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext } from "react";
 import CartContext from "../../contexts/cart-context";
 
 const CartButton = () => {
