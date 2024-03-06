@@ -6,7 +6,7 @@ const Footer = () => {
         <Container fluid className="bg-info pt-3 pb-3">
             <Row>
                 <Col>
-                    <div className="display-5 fw-bolder text-light font-monospace d-flex align-items-center justify-content-around  ">The Generics</div>
+                    <div className="display-5 fw-bolder text-light font-monospace d-flex align-items-center justify-content-around  "><span style={{fontFamily: "Times New Roman"}}>The Generics</span></div>
                 </Col>
                 <Col className="">
                     <ul className="w-50 list-unstyled d-flex align-items-center justify-content-center mt-auto mb-auto">

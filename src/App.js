@@ -4,6 +4,8 @@ import AppNavbar from "./components/Navbar/AppNavbar";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./components/About/About";
+import { Fragment } from "react";
+import Home from "./components/Home/Home";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,10 +19,19 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: (
-      <CartProvider>
+      <Fragment>
         <AppNavbar />
         <About />
-      </CartProvider>
+      </Fragment>
+    ),
+  },
+  {
+    path: "/home",
+    element: (
+      <Fragment>
+        <AppNavbar />
+        <Home />
+      </Fragment>
     ),
   }
 ]);

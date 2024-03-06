@@ -1,10 +1,11 @@
 import { Container } from "react-bootstrap";
 
 
-const Header = () => {
+const Header = (props) => {
     return (
-        <Container fluid className="bg-dark-subtle p-5 d-flex justify-content-center ">
-          <h1 className="p-3 display-1 fw-bolder">The Generics</h1>
+        <Container fluid className="bg-secondary  p-5 d-flex flex-column align-items-center justify-content-center ">
+          <h1 className="p-3 fw-bolder text-light" style={{fontFamily: "Times New Roman", fontSize: '7rem'}}>The Generics</h1>
+          {props.children}
       </Container>
     )
 }

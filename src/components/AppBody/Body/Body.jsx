@@ -49,7 +49,7 @@ const Body = () => {
 
   return (
     <Container className="p-3">
-        <header className="p-3 d-flex justify-content-center "><h1 className="m-0">MUSIC</h1></header>
+        <header className="p-3 d-flex justify-content-center "><h1 className="m-0 fw-bolder " style={{fontFamily: 'Metal Maniac'}}>MUSIC</h1></header>
         <Row xs={1} md={2} className="d-flex align-items-center justify-content-around">
             {products}
         </Row>
