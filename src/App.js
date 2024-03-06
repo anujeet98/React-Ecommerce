@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./components/About/About";
 import { Fragment } from "react";
 import Home from "./components/Home/Home";
+import Movies from "./components/Movies/Movies";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
       <Fragment>
         <AppNavbar />
         <Home />
+      </Fragment>
+    ),
+  },
+  {
+    path: "/movie",
+    element: (
+      <Fragment>
+        <Movies/>
       </Fragment>
     ),
   }
