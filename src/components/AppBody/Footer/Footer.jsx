@@ -4,9 +4,9 @@ import { Col, Container, Row } from "react-bootstrap";
 const Footer = () => {
     return (
         <Container fluid className="bg-info pt-3 pb-3">
-            <Row className="align-items-center ">
+            <Row>
                 <Col>
-                    <div className="display-5 fw-bolder text-light font-monospace  ">The Generics</div>
+                    <div className="display-5 fw-bolder text-light font-monospace d-flex align-items-center justify-content-around  ">The Generics</div>
                 </Col>
                 <Col className="">
                     <ul className="w-50 list-unstyled d-flex align-items-center justify-content-center mt-auto mb-auto">

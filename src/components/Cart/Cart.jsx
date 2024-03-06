@@ -1,51 +1,15 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Modal from "../Modal/Modal";
 import classes from "./Cart.module.css";
+import { useContext } from "react";
+import CartContext from "../../contexts/cart-context";
 
 const Cart = (props) => {
-
-    const cartElements = [
-
-        {
-        
-        title: 'Colors',
-        
-        price: 100,
-        
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%201.png',
-        
-        quantity: 2,
-        
-        },
-        
-        {
-        
-        title: 'Black and white Colors',
-        
-        price: 50,
-        
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%202.png',
-        
-        quantity: 3,
-        
-        },
-        
-        {
-        
-        title: 'Yellow and Black Colors',
-        
-        price: 70,
-        
-        imageUrl: 'https://prasadyash2411.github.io/ecom-website/img/Album%203.png',
-        
-        quantity: 1,
-        
-        }
-        
-        ]
-    const cartItems = cartElements.map(prod => {
-        return (
-            <Row className="pt-2 pb-2 align-items-center border-bottom border-5">
+    const cartCtx = useContext(CartContext);
+    const cartItems = [];
+    cartCtx.items.forEach(prod => {
+        cartItems.push(
+            <Row key={prod.id} className="pt-2 pb-2 align-items-center border-bottom border-5">
                 <Col>
                     <span className="d-flex">
                         <img src={prod.imageUrl} alt="prod-img" className="w-50"/>
@@ -80,7 +44,7 @@ const Cart = (props) => {
       </Container>
 
       <div className="d-flex align-items-center justify-content-end mt-3 mb-3  ">
-          <span className="fw-bolder fs-5">Total</span> <span>$ 56.96</span>
+          <span className="fw-bolder fs-5">Total</span> <span>$ {cartCtx.total}</span>
       </div>
 
       <div className="d-flex justify-content-center">

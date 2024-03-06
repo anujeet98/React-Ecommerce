@@ -1,19 +1,18 @@
 import { Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
+import CartContext from "../../contexts/cart-context";
 
 const CartButton = () => {
-    const [cartIsShown, setCartIsShown] = useState(false);
-    const qty = 0;
-    const showCartHandler = () => setCartIsShown(true);
-    const hideCartHandler = () => setCartIsShown(false);
+    const cartCtx = useContext(CartContext);
+    const qty = cartCtx.items.size;
 
     return (
         <Fragment>
-            <Button onClick={showCartHandler}>
+            <Button onClick={cartCtx.onShowCart}>
                 Cart {qty}
             </Button>
-            {cartIsShown ? <Cart onHideCart={hideCartHandler} /> : ""}
+            {cartCtx.showCart ? <Cart onHideCart={cartCtx.onHideCart} /> : ""}
         </Fragment>
     );
 };

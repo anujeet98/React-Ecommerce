@@ -1,7 +1,11 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
+import Product from "./Product";
+import { useContext } from "react";
+import CartContext from "../../../contexts/cart-context";
 // import classes from './Body.module.css';
 
 const Body = () => {
+  const cartCtx = useContext(CartContext);
   const productsArr = [
     {
       title: "Colors",
@@ -39,30 +43,18 @@ const Body = () => {
         "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
     },
   ];
-  const products = productsArr.map((product, index) => {
-    return (
-        <Col key={index} className="p-0 d-flex align-items-center justify-content-around">
-            <Card className="m-4 border-0" style={{ maxWidth: '260px' }}>
-                <Card.Title className="mb-3 fs-5">{product.title}</Card.Title>
-                <Card.Img src={product.imageUrl} className="" />
-
-                <Card.Footer className="d-flex align-items-center justify-content-between ">
-                    <Card.Text className="mt-auto mb-auto">$ {product.price}</Card.Text>
-                    <Button className="btn btn-info text-light">ADD TO CART</Button>
-                </Card.Footer>
-            </Card>
-        </Col>
-    )
+  const products = productsArr.map((product) => {
+    return (<Product key={product.id} data={product}/>);
   })
 
   return (
     <Container className="p-3">
-        <header className="p-3"><h1 className="m-0">MUSIC</h1></header>
+        <header className="p-3 d-flex justify-content-center "><h1 className="m-0">MUSIC</h1></header>
         <Row xs={1} md={2} className="d-flex align-items-center justify-content-around">
             {products}
         </Row>
-        <div>
-          <Button className=" btn-secondary">See the cart</Button>
+        <div className="d-flex justify-content-center ">
+          <Button className=" btn-secondary fs-3" onClick={cartCtx.onShowCart}>See the cart</Button>
         </div>
     </Container>
   );

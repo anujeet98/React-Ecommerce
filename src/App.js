@@ -1,12 +1,12 @@
-import './App.css';
+import CartProvider from './contexts/CartProvider';
 import AppBody from './components/AppBody/AppBody';
 import AppNavbar from './components/Navbar/AppNavbar';
 function App() {
   return (
-    <div className="App">
+    <CartProvider>
       <AppNavbar/>
       <AppBody/>
-    </div>
+    </CartProvider>
   );
 }
 
