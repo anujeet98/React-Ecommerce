@@ -1,5 +1,5 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import classes from './Body.module.css';
+// import classes from './Body.module.css';
 
 const Body = () => {
   const productsArr = [
@@ -61,6 +61,9 @@ const Body = () => {
         <Row xs={1} md={2} className="d-flex align-items-center justify-content-around">
             {products}
         </Row>
+        <div>
+          <Button className=" btn-secondary">See the cart</Button>
+        </div>
     </Container>
   );
 };
