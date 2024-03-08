@@ -11,6 +11,7 @@ import Home from "./components/Home/Home";
 import Movies from "./components/Movies/Movies";
 import Contact from "./components/Contact/Contact";
 import CartButton from "./components/UI/CartButton/CartButton";
+import Product from "./components/Product/Product";
 // //BELOW IS AVAILABLE IN REACT_ROUTER - V6
 // const router = createBrowserRouter([
 //   {
@@ -77,6 +78,9 @@ function App() {
       </Route>
       <Route path='/contact'>
       <Fragment><AppNavbar/><Contact/></Fragment>
+      </Route>
+      <Route path='/products/:productid'>
+      <Fragment><AppNavbar/><Product/></Fragment>
       </Route>
     </div>
   );
