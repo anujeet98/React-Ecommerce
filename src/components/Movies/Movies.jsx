@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import MovieItem from "./MovieItem";
 import classes from './Movies.module.css'; 
@@ -22,24 +22,22 @@ const Movies = () => {
     }
 
 
-    const fetchMoviesHandler = async() => {
+    const fetchMoviesHandler = useCallback(async () => {
         setIsLoading(true);
         try{
-            const resp = await fetch('https://swapi.dev/api/films/');
-            if(!resp.ok){
-                console.log('errrororororo');
+            const resp = await fetch('https://swapi-node.now.sh/api/films');
+            if(!resp.ok)
                 throw new Error('Something went wrong ....Retrying');
-            }
             const data = await resp.json();
 
             const transformedMovies = data.results.map(movie => {
                 return {
-                    id: movie.episode_id,
-                    title: movie.title,
-                    openingText: movie.opening_crawl,
-                    releaseDate: movie.release_date,
+                    id: movie.fields.episode_id,
+                    title: movie.fields.title,
+                    openingText: movie.fields.opening_crawl,
+                    releaseDate: movie.fields.release_date,
                 }
-            })
+            });
             setMovies(transformedMovies);
             setIsLoading(false);
             setFetchError(null);
@@ -51,7 +49,11 @@ const Movies = () => {
                 fetchMoviesHandler();
             },5000));
         }
-    }
+    }, []);
+
+    useEffect(()=>{
+        fetchMoviesHandler();
+    },[fetchMoviesHandler]);
 
     useEffect(() => {
         return () => {
@@ -68,11 +70,8 @@ const Movies = () => {
 
     return (
         <Container>
-        <section className="d-flex align-items-center  justify-content-center mt-5 mb-5"><Button onClick={fetchMoviesHandler}>Fetch Movies</Button></section>
-        <section>
-            <ul className="p-0 text-center">
+        <section className="p-0 text-center pt-5 list-unstyled ">
                 {content}
-            </ul>
         </section>
     </Container>
     )
