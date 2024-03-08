@@ -10,7 +10,7 @@ const Product = (props) => {
         cartCtx.addItem({...props.data, id:props.data.title})
     }
     return (
-        <Col className="p-0 d-flex align-items-center justify-content-around">
+        <Col key={props.data.id} className="p-0 d-flex align-items-center justify-content-around">
             <Card className="m-4 border-0" style={{ maxWidth: '260px' }}>
                 <Card.Title className="mb-3 fs-5 ms-auto me-auto">{props.data.title}</Card.Title>
                 <Card.Img src={props.data.imageUrl} className="" />

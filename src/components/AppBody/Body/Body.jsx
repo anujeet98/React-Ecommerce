@@ -44,7 +44,7 @@ const Body = () => {
     },
   ];
   const products = productsArr.map((product) => {
-    return (<Product key={product.id} data={product}/>);
+    return (<Product data={product}/>);
   })
 
   return (

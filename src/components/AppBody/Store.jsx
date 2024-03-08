@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 // import classess from "./AppBody.module.css";
-import Footer from "./Footer/Footer";
-import Header from "./Header/Header";
+import Footer from "../UI/Footer/Footer";
+import Header from "../UI/Header/Header";
 import Body from "./Body/Body";
 
 const AppBody = () => {
   return (
     <Fragment>
-      <Header />
+      <Header/>
       <Body/>
       <Footer />
     </Fragment>

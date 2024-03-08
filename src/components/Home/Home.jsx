@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import Footer from "../AppBody/Footer/Footer";
-import Header from "../AppBody/Header/Header";
-import { Button, Container, Row, Table } from "react-bootstrap";
+import Footer from "../UI/Footer/Footer";
+import Header from "../UI/Header/Header";
+import { Button, Container, Row } from "react-bootstrap";
 import './Home.css';
 
 
@@ -11,7 +11,7 @@ const Home = () => {
     
     const tourInfo = tours.map(tour=>{
         return (
-            <div className="d-flex align-items-center justify-content-between  border-bottom  border-black pb-2 pt-2 ">
+            <div className="d-flex align-items-center justify-content-between  border-bottom  border-black pb-2 pt-2 " key={tour.date+tour.location}>
                 <span className="tour-date">{tour.date}</span>
                 <span className="tour-location">{tour.location}</span>
                 <span className="tour-place">{tour.place}</span>
@@ -31,9 +31,9 @@ const Home = () => {
                     <h1 className="d-flex align-items-center justify-content-center p-3 m-0 fw-bolder " style={{fontFamily: "Metal Mania"}}>Tours</h1>
                 </Row>
                 <Row>
-                    <Table className="text-center fs-5">
+                    <div className="text-center fs-5">
                         {tourInfo}
-                    </Table>
+                    </div>
                 </Row>
             </Container>
 

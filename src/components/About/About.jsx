@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import Header from "../AppBody/Header/Header";
-import Footer from "../AppBody/Footer/Footer";
+import Header from "../UI/Header/Header";
+import Footer from "../UI/Footer/Footer";
 import classess from './About.module.css';
 
 

@@ -1,0 +1,15 @@
+
+
+
+
+.nav a{
+    color: white;
+    text-decoration: none;
+}
+
+.nav a:hover,
+.nav a:active{
+    color: rgb(120, 221, 221);
+    padding-bottom: 0.25rem;
+    border-bottom: 4px solid rgb(120, 221, 221);
+}

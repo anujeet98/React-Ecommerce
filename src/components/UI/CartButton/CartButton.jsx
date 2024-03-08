@@ -1,7 +1,8 @@
 import { Button } from "react-bootstrap";
-import Cart from "../Cart/Cart";
+
 import { Fragment, useContext } from "react";
-import CartContext from "../../contexts/cart-context";
+import CartContext from "../../../contexts/cart-context";
+import Cart from "../Cart/Cart";
 
 const CartButton = () => {
     const cartCtx = useContext(CartContext);
@@ -9,7 +10,7 @@ const CartButton = () => {
 
     return (
         <Fragment>
-            <Button onClick={cartCtx.onShowCart}>
+            <Button className="" onClick={cartCtx.onShowCart}>
                 Cart {qty}
             </Button>
             {cartCtx.showCart ? <Cart onHideCart={cartCtx.onHideCart} /> : ""}

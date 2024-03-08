@@ -12,7 +12,7 @@ const Movies = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState(null);
     const [intervalId, setIntervalId] = useState(null);
-    const [userContent, setUserContent] = useState([]);
+    // const [userContent, setUserContent] = useState([]);
 
     const stopFetchRetry = () => {
         clearInterval(intervalId);
@@ -53,24 +53,19 @@ const Movies = () => {
 
     const addMovieHandler = useCallback(async(newMovie) => {
         try{
-            const resp = await fetch('https://react-http-85467-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json',{
+            await fetch('https://react-http-85467-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json',{
                 method: 'POST',
                 body: JSON.stringify(newMovie),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-
-            const data = await resp.json();
             fetchMoviesHandler();
-            // setUserContent(userContent => {
-            //     return [...userContent, <MovieItem key={newMovie.id} data={newMovie}></MovieItem>];
-            // })
         }
         catch(err){
             console.log(err);
         }
-    }, []);
+    }, [fetchMoviesHandler]);
 
     const deleteMovieHandler = async (id) => {
         try{
@@ -112,7 +107,6 @@ const Movies = () => {
             </section>
             <section className="p-5 border border-3 border mb-5 bg-light rounded-4 "><Button onClick={fetchMoviesHandler}>Fetch Movies</Button></section>
             <section className="p-5 mb-5 list-unstyled border border-3 border bg-light rounded-4">
-                {userContent}
                 {content}
             </section>
         </Container>
