@@ -2,18 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import MovieItem from "./MovieItem";
 import classes from './Movies.module.css'; 
+import AddForm from "./AddForm";
 
 
 
 
 const Movies = () => {
-    let content = <p>No Movies Found</p>;
-
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState(null);
-
     const [intervalId, setIntervalId] = useState(null);
+    const [userContent, setUserContent] = useState([]);
 
     const stopFetchRetry = () => {
         clearInterval(intervalId);
@@ -51,16 +50,14 @@ const Movies = () => {
         }
     }, []);
 
-    useEffect(()=>{
-        fetchMoviesHandler();
-    },[fetchMoviesHandler]);
+    const addMovieHandler = useCallback((newMovie) => {
+        setUserContent(userContent => {
+            return [...userContent, <MovieItem key={newMovie.id} data={newMovie}></MovieItem>];
+        })
+    }, []);
+ 
 
-    useEffect(() => {
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [intervalId]);   
-    
+    let content = <p>No Movies Found</p>;
     if(movies.length>0)
         content = movies.map(movie => <MovieItem key={movie.id} data={movie}></MovieItem>);
     else if(fetchError)
@@ -68,12 +65,28 @@ const Movies = () => {
     else if(isLoading)
         content = <div className={classes.loader}></div>;
 
+
+    // useEffect(()=>{
+    //     fetchMoviesHandler();
+    // },[fetchMoviesHandler]);
+
+    useEffect(() => {
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [intervalId]);   
+
     return (
-        <Container>
-        <section className="p-0 text-center pt-5 list-unstyled ">
+        <Container className="text-center">
+            <section className="mt-5 mb-5 p-5 border border-3 border bg-light rounded-4">
+                <AddForm onSubmit={addMovieHandler}/>
+            </section>
+            <section className="p-5 border border-3 border mb-5 bg-light rounded-4 "><Button onClick={fetchMoviesHandler}>Fetch Movies</Button></section>
+            <section className="p-5 mb-5 list-unstyled border border-3 border bg-light rounded-4">
+                {userContent}
                 {content}
-        </section>
-    </Container>
+            </section>
+        </Container>
     )
 }
 
