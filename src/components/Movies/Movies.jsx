@@ -24,19 +24,20 @@ const Movies = () => {
     const fetchMoviesHandler = useCallback(async () => {
         setIsLoading(true);
         try{
-            const resp = await fetch('https://swapi-node.now.sh/api/films');
+            const resp = await fetch('https://react-http-85467-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json');
             if(!resp.ok)
                 throw new Error('Something went wrong ....Retrying');
             const data = await resp.json();
 
-            const transformedMovies = data.results.map(movie => {
-                return {
-                    id: movie.fields.episode_id,
-                    title: movie.fields.title,
-                    openingText: movie.fields.opening_crawl,
-                    releaseDate: movie.fields.release_date,
-                }
-            });
+            const transformedMovies = [];
+            for(const key in data){
+                transformedMovies.push({
+                    id: key,
+                    title: data[key].title,
+                    openingText: data[key].openingText,
+                    releaseDate: data[key].releaseDate,
+                })
+            }
             setMovies(transformedMovies);
             setIsLoading(false);
             setFetchError(null);
@@ -50,16 +51,44 @@ const Movies = () => {
         }
     }, []);
 
-    const addMovieHandler = useCallback((newMovie) => {
-        setUserContent(userContent => {
-            return [...userContent, <MovieItem key={newMovie.id} data={newMovie}></MovieItem>];
-        })
+    const addMovieHandler = useCallback(async(newMovie) => {
+        try{
+            const resp = await fetch('https://react-http-85467-default-rtdb.asia-southeast1.firebasedatabase.app/movies.json',{
+                method: 'POST',
+                body: JSON.stringify(newMovie),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await resp.json();
+            fetchMoviesHandler();
+            // setUserContent(userContent => {
+            //     return [...userContent, <MovieItem key={newMovie.id} data={newMovie}></MovieItem>];
+            // })
+        }
+        catch(err){
+            console.log(err);
+        }
     }, []);
+
+    const deleteMovieHandler = async (id) => {
+        try{
+            const resp = await fetch(`https://react-http-85467-default-rtdb.asia-southeast1.firebasedatabase.app/movies/${id}.json`,{method: 'DELETE'});
+            if(!resp.ok)
+                throw new Error('something went wrong...');
+            else
+                fetchMoviesHandler();
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
  
 
     let content = <p>No Movies Found</p>;
     if(movies.length>0)
-        content = movies.map(movie => <MovieItem key={movie.id} data={movie}></MovieItem>);
+        content = movies.map(movie => <div className="pb-2 border-botttom border-2" key={movie.id}><MovieItem key={movie.id} data={movie}></MovieItem><Button onClick={()=>deleteMovieHandler(movie.id)} className="btn btn-danger">Delete</Button></div>);
     else if(fetchError)
         content = <Container><div>{fetchError}</div><div className={classes.loader}></div><Button onClick={stopFetchRetry}>STOP</Button></Container>;
     else if(isLoading)

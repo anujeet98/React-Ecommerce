@@ -10,7 +10,6 @@ const initialState = {
 }
 
 const AddForm = (props) => {
-  console.log('form exec')
   const [state, dispatch] = useReducer(FormReducer, initialState);
 
   const formControlChangeHandler = (e, fieldParam=e.target.name, valueParam=e.target.value) => {
@@ -27,7 +26,6 @@ const AddForm = (props) => {
       if(state.title.trim()==='' || state.openingText.trim()==='' || state.releaseDate.trim()==='')
         return alert('kindly fill all the fields');
       const movieObj = {
-        id: state.title.trim()+new Date(),
         title: state.title.trim(),
         openingText: state.openingText.trim(),
         releaseDate: state.releaseDate.trim(),
