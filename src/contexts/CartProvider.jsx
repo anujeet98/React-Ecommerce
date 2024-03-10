@@ -2,26 +2,21 @@ import { useState } from "react";
 import CartContext from "./cart-context";
 
 const addToCartLogic = (prevCart, item) => {
-    const updatedCart = new Map(prevCart);
-    updatedCart.set(item.id, {...item, quantity:1});
+    const updatedCart = [...prevCart, {...item, quantity:1}];
     return updatedCart;
 }
 
 const CartProvider = (props) => {
-  const [cartItems, setCartItems] = useState(new Map());
+  const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
   const addItemToCartHandler = (item) => {
     setCartItems((prevCart) => {
-        if(prevCart.has(item.id)){
-            alert('This item is already added to the cart.');
-            return prevCart;
+        const existingItem = prevCart.find(cartItem=>cartItem.id===item.id);
+        if(existingItem){
+          alert('This item is already added to the cart.');
+          return prevCart;
         }
-        // const prevQty = prevCart.get(item.id) ? Number(prevCart.get(item.id).quantity) : 0;
-        // if(Number(item.quantity) + prevQty > 10){
-        //     alert('Item quantity in the cart must not exceed 10');
-        //     return prevCart;
-        // }
         return addToCartLogic(prevCart, item);
     });
   };
@@ -33,8 +28,11 @@ const CartProvider = (props) => {
         alert("Item with id: " + id + " does not exist in the cart");
         return prevCart;
       }
-      const updatedCart = new Map(prevCart);
-      updatedCart.get(id).quantity > 1 ? updatedCart.get(id).quantity-- : updatedCart.delete(id);
+      let updatedCart = [...prevCart];
+      updatedCart = updatedCart.filter(cartItem => cartItem.id!==id);
+      // const existingItem = prevCart.find(cartItem=>cartItem.id===item.id);
+      // if(existingItem && )
+      // updatedCart.get(id).quantity > 1 ? updatedCart.get(id).quantity-- : updatedCart.delete(id);
       return updatedCart; 
     });
   };
@@ -47,7 +45,7 @@ const CartProvider = (props) => {
   }
 
   let cartTotal = 0;
-  cartItems.forEach((item,key) => {
+  cartItems.forEach(item => {
     cartTotal += Number(item.price) * Number(item.quantity);
   });
 

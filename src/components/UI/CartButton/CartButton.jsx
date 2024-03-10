@@ -6,7 +6,7 @@ import Cart from "../Cart/Cart";
 
 const CartButton = () => {
     const cartCtx = useContext(CartContext);
-    const qty = cartCtx.items.size;
+    const qty = cartCtx.items.length;
 
     return (
         <Fragment>
