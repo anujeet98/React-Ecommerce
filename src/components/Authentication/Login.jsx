@@ -39,7 +39,7 @@ const Login = () => {
         throw new Error(resData.error.message);
       }
 
-      authCtx.addToken(resData.idToken, resData.expiresIn);
+      authCtx.addToken(resData.idToken, resData.email, resData.expiresIn);
       alert(`${isLogin ? 'User sign in successful' : 'User sign up successful'}`);
       passwordref.current.value='';
       history.push('/store');
