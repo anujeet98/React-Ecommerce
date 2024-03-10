@@ -1,6 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 // import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import CartProvider from "./contexts/CartProvider";
 import Store from "./components/AppBody/Store";
@@ -12,6 +12,9 @@ import Movies from "./components/Movies/Movies";
 import Contact from "./components/Contact/Contact";
 import CartButton from "./components/UI/CartButton/CartButton";
 import Product from "./components/Product/Product";
+import Login from "./components/Authentication/Login";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
+import AuthContext from "./contexts/auth-context";
 // //BELOW IS AVAILABLE IN REACT_ROUTER - V6
 // const router = createBrowserRouter([
 //   {
@@ -62,10 +65,14 @@ import Product from "./components/Product/Product";
 
 
 function App() {
+  const authCtx = useContext(AuthContext);
   return (
-    <div>
+    <Switch>
+      <Route path='/login'>
+        {!authCtx.authToken ? <Fragment><AppNavbar/><Login/></Fragment> : <Redirect to='/home'/>}
+      </Route>
       <Route path='/store'>
-        <CartProvider><AppNavbar><CartButton/></AppNavbar><Store/></CartProvider>
+        {authCtx.authToken ? <CartProvider><AppNavbar><CartButton/></AppNavbar><Store/></CartProvider> : <Redirect to='/login'/>}
       </Route>      
       <Route path='/home'>
         <Fragment><AppNavbar/><Home/></Fragment>
@@ -74,15 +81,18 @@ function App() {
         <Fragment><AppNavbar/><About/></Fragment>
       </Route>
       <Route path='/movie'>
-        <Movies/>
+        {authCtx.authToken ? <Fragment><AppNavbar/><Movies/></Fragment> : <Redirect to='/login'/>}
       </Route>
       <Route path='/contact'>
       <Fragment><AppNavbar/><Contact/></Fragment>
       </Route>
       <Route path='/products/:productid'>
-      <Fragment><AppNavbar/><Product/></Fragment>
+        {authCtx.authToken ? <Fragment><AppNavbar/><Product/></Fragment> : <Redirect to='/login'/>}
       </Route>
-    </div>
+      <Route path='*'>
+        {authCtx.authToken ? <Redirect to='/store'></Redirect> : <Redirect to='/login'/>}
+      </Route>
+    </Switch> 
   );
 }
 
